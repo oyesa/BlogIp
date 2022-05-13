@@ -1,14 +1,111 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        {% if title %}
-        <title> {{ title }}</title>
-        {% else %}
-        <title> Welcome to THA TECH STREETS Blog!! </title>
-        {% endif %}
-    </head>
-    <body>
+{% extends 'base.html'%}
 
-    </body>
-</html>
+{% import 'macros.html' as macro%}
+
+
+<!-- Styles block -->
+{% block styles%}
+{{ super() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}" type="text/css">
+{% endblock styles%}
+
+<!-- Content block -->
+{% block content %}
+<div class="row">
+    <div class="header col-md-3">
+        <a href="/">
+            <h1 class="visible">Tha <br>Tech <br>Streets</h1>
+            <h1 class="not-visible">The Daily Telegram</h1>
+        </a>
+        <h5>Word from the streets of Tech!</h5>
+        <br>
+        <h5>Search post</h5>
+        <form action="{{ url_for('main.search')}}" class="search">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search by keyword" name="keyword_query"
+                aria-label="Search" style="background-color: transparent;" required>
+            <button class="btn my-2 my-sm-0" value="Submit" type="submit">Search</button>
+        </form>
+        <div>
+            <div class="row mt-3">
+                <div class="card p-3 col-md-12">
+                    <h5>Join our community</h5>
+                    <p>Subscribe and join our mailing list to receive updates on new blog posts.</p>
+                    <div class="col-md-12">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} d-flex" role="alert">
+                            <div>
+                                <small>{{ message }}</small>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    <form action="{{ url_for('main.subscribe')}}" class="search">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Email" name="email" required>
+                            <div class="input-group-append">
+                                <button class="btn" type="submit">
+                                    <i class="fa fa-envelope text-white"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer text-center">
+            <a href="http://quotes.stormconsultancy.co.uk/popular" target="_blank">
+                <p>Tha Tech Streets</p>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <h3 class="text-center">QUOTES</h3>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel"> 
+                    <div class="carousel-inner">
+                      <div class="item active">
+                        <img src="{{}}" alt="..." class="img-responsive" onerror="imgError(this);">
+                        <div class="carousel-caption">
+                            <p><a href="{{}}" target="_blank">{{}}</a></p>                                                                      
+                        </div>
+                      </div>
+                      {{}}
+                    </div>
+                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                </div> 
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <br><h3 class="text-center">BLOG</h3><hr>
+    </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8">
+                {{ macro.displayPosts(posts) }}
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row mt-3">
+    <div class="card p-2">
+        <div class="col-md-12 categories">
+            <h5>Categories</h5>
+            {% for category in categories %}
+            <a class="btn btn-sm btn-outline-dark"
+                href="{{ url_for('main.filter_posts',id=category.id) }}">{{ category.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock%}
