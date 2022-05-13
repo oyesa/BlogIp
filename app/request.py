@@ -1,4 +1,8 @@
-from app import app
+import request
 
-# Getting api key
-api_key = app.config['QUOTES_API_KEY']
+# function to get quote from API
+def get_quotes():
+    response = request.get('http://quotes.stormconsultancy.co.uk/random.json')
+    if response.status_code == 200:
+        quote = response.json()
+        return quote
