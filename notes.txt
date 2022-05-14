@@ -1,0 +1,71 @@
+Flask Setup & Installation
+
+Creating a Flask App
+
+Creating Routes/Views
+-In views.py
+
+__Jinja Templating Language & HTML Templates__
+Sign Up Page HTML 
+Login Page HTML
+HTTP Requests (POST, GET, etc.)
+Handling POST Requests
+Message Flashing
+Flask SQLAlchemy Setup
+Database Models
+Foreign Key Relationships
+Database Creation
+Creating New User Accounts
+Logging In Users 
+Flask Login Module
+Checking if User is Logged In
+Notes HTML
+Adding Pitch
+Deleting Pitch
+
+
+__Database Migrations__
+Database migrations are records of all the changes of our database schema.
+
+Step 1: pip install flask-migrate
+
+Step 2: Import and initialize the flask extension in manage.py 
+*from  flask_migrate import Migrate, MigrateCommand
+   migrate = Migrate(app,db)
+   manager.add_command('db',MigrateCommand)
+
+Step 3: To use migrations we first need to Initialize our application to use Migrations: 
+  python3.8 manage.py db init(this creates the migration folder in root directory)
+  python3.8 manage.py db migrate -m "Initial Migration" (this creates first migration)
+  python3.8 manage.py db upgrade (this creates a migration version)
+
+
+__SETTING UP SQLAlchemy__
+pip install flask-SQLAlchemy
+pip install psycopg2
+
+Step 1: SQLAlchemy needs one important configuration.
+config.py
+SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://oyesa:magzak@localhost/pitches'
+
+create a new database for our application.
+$ psql
+oyesa=# CREATE DATABASE pitches;
+
+
+
+__Deployment Bugs to look out for__
+config.py add .replace("postgres://", "postgresql://", 1)
+
+
+__ERRORS TO DEBUG__
+-Models.py: Line 74 - 77
+-
+
+__THINGS TO NOTE__
+-I haven't used migrations 
+-pip install Flask-SimpleMDE
+
+
+__TERMS__
+nulable=true means the column cant be blank, user has to input infomation
