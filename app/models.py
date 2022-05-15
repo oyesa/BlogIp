@@ -69,6 +69,47 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
+
+#comment class
+class Comment(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String())
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    post_owner_id = db.Column(db.Integer)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    #methods to save, get and delete comments
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_comments(cls):
+        comments = Comment.query.all()
+        return comments
+
+    @classmethod
+    def get_comments_by_post(cls, post_id):
+        comments = Comment.query.filter_by(post_id=post_id)
+        return comments
+
+    @classmethod
+    def get_my_posts_comments(cls, user_id):
+        comments = Comment.query.filter_by(post_owner_id=user_id)
+        return comments
+
+    @classmethod
+    def delete_comment(cls, id):
+        comment = Comment.query.filter_by(id=id).first()
+        db.session.delete(comment)
+        db.session.commit()
+
+    def __repr__(self):
+        return f'Comment {self.content}'
+
+
 #post class
 class Post(db.Model):
     __tablename__ = 'posts'
@@ -121,3 +162,14 @@ class Post(db.Model):
 
     def __repr__(self):
         return f'Post {self.title}'
+
+#category class
+class Category(db.Model):
+    __tablename__ = 'categories'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    posts = db.relationship('Post', backref='category', lazy='dynamic')
+
+    def __repr__(self):
+        return f'Category {self.name}'
