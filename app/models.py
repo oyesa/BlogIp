@@ -68,3 +68,56 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return f'User {self.username}'
+
+#post class
+class Post(db.Model):
+    __tablename__ = 'posts'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    title = db.Column(db.String(255))
+    content = db.Column(db.String())
+    image_path = db.Column(db.String())
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    comments = db.relationship('Comment', backref='post', lazy='dynamic')
+
+    #methods to save and obtain info from post
+    def save_post(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_posts(cls):
+        posts = Post.query.all()
+        return posts
+
+    @classmethod
+    def get_user_posts(cls, user_id):
+        posts = Post.query.filter_by(user_id=user_id)
+        return posts
+
+    @classmethod
+    def get_post(cls, id):
+        post = Post.query.filter_by(id=id).first()
+        return post
+
+    @classmethod
+    def get_post_by_category(cls, category_id):
+        posts = Post.query.filter_by(category_id=category_id)
+        return posts
+
+    def get_comments(self):
+        comments = Comment.query.filter_by(post_id=self.id)
+        return comments
+
+    @classmethod
+    def get_posts_by_query(cls, query):
+        posts = Post.query.filter(Post.title.ilike('%' + query + '%'))
+        return posts
+
+    def delete_post(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f'Post {self.title}'
