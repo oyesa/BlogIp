@@ -157,3 +157,31 @@ def delete_comment(id):
     flash('Comment deleted.', category='success')
     return redirect(url_for('main.profile', username=current_user.username))
 
+
+#uploading profile image
+@main.route('/profile/<username>/update/pic', methods=['POST'])
+@login_required
+def update_pic(username):
+    user = User.query.filter_by(username=username).first()
+    if 'photo' in request.files:
+        image_url = upload(request.files['photo'])['url']
+        user.profile_pic_path = image_url
+        db.session.commit()
+        flash('Image upload successful', category='success')
+        return redirect(url_for('main.profile', username=username))
+    else:
+        flash('Image upload not successful', category='error')
+        return redirect(url_for('main.profile', username=username))
+
+
+#update blogpost image
+@main.route('/post/<int:id>/update/image', methods=['GET', 'POST'])
+@login_required
+def update_post_image(id):
+    post = Post.query.filter_by(id=id).first()
+    if 'photo' in request.files:
+        image_url = upload(request.files['photo'])['url']
+        post.image_path = image_url
+        db.session.commit()
+        flash('Blogpost image uploaded', category='success')
+        return redirect(url_for('main.profile', username=current_user.username))
