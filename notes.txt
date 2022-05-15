@@ -46,7 +46,7 @@ pip install psycopg2
 
 Step 1: SQLAlchemy needs one important configuration.
 config.py
-SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://oyesa:magzak@localhost/pitches'
+SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://oyesa:Mimo33@localhost/blogdb'
 
 create a new database for our application.
 $ psql
@@ -69,3 +69,6 @@ __THINGS TO NOTE__
 
 __TERMS__
 nulable=true means the column cant be blank, user has to input infomation
+
+
+pip install email_validator
