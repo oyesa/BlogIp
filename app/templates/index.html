@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macro%}
+
+{% block content %}
+<!-- homepage-content -->
+<section class="homepage">
+  <div class="home">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-8 text-center">
+                  <div class="homepage-content">
+                      <h3><q>{{ quote.quote }}</q></h3>
+                      <p class="author mt-3">~ {{ quote.author }} ~</p>
+                  </div>
+              </div>
+              <div class="col-md-2"></div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- display blogposts -->
+<section>
+  <div class="container mt-5">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="row">
+                {{ macro.displayPosts(posts) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+          <div class="row">
+              <div class="card p-3 col-md-12">
+                  <h5>Search</h5>
+                  <form action="{{ url_for('main.search')}}" class="search">
+                      <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search post title.." name="query">
+                          <div class="input-group-append">
+                              <button class="btn" type="submit"><i class="fa fa-search text-white"></i></button>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="card p-2">
+              <div class="col-md-12 categories">
+                  <h5>Blog Categories</h5>
+                  {% for category in categories %}
+                  <a class="btn btn-sm btn-outline-dark"
+                      href="{{ url_for('main.filter_posts',id=category.id) }}">{{ category.name }}</a>
+                  {% endfor %}
+              </div>
+          </div>
+      </div>
+      <div class="card p-2 row mt-3 tops">
+
+        <h5>MAKING HEADLINES</h5>
+        
+        {% for post in latest_posts %}
+        <a href="{{ url_for('main.single_post',id=post.id)}}">
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    {% if post.image_path %}
+                    <img src="{{ post.image_path }}" alt="{{ post.title }}" class="side-post-image">
+                    {% else %}
+                    <img src="https://unsplash.com/photos/zZPeoLxLRyM"
+                        alt="{{ post.title }}" class="side-post-image">
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <p>
+                        {{ post.title }}
+                        <br>
+                        <small>
+                            <span><i class="fa fa-user" style="font-size: 10px;"></i> {{post.created_at.strftime('%d %b %Y') }}</span>
+                        </small>
+                    </p>
+                </div>
+            </div>
+            <hr>
+        </a>
+        {% endfor %}
+    </div>
+
+
+</section>
+
+{% endblock %}

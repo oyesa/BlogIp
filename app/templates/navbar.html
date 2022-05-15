@@ -18,7 +18,7 @@
         </li>
         <li class="nav-item active">
           <a class="nav-link" href="{{ url_for('main.filter_posts',id=2) }}" id="navbarDropdownMenuLink">
-            FASHION
+            ART
           </a>
         </li>
         <li class="nav-item active">
@@ -40,22 +40,12 @@
             </li>
             {% else %}
             <li class="nav-item">
-              <a class="btn color-primary" href="{{ url_for('auth.login')}}">sign in</a>
+              <a class="btn color-primary" href="{{ url_for('auth.login')}}">Login</a>
             </li>
           {% endif %}
       </ul>
     </div>
   </nav>
 </section>
-
-    <!--mid-section landing page-->
-
-    <div class="text-box">
-      <h1><strong>THA TECH STREETS</strong></h1>
-      <P>There is a whole mountain of information out there about whats happening in the technology world, but, you want the <br>information tailored to bits and tweets right.
-        Tha Tech Streets blog is here to break it down for you <br> come along!.
-      </P>
-      <a href="{{ url_for('main.filter_posts',id=1) }}" class="hero-btn" id="landing-pg">Learn More</a>
-    </div> 
   </section>
     
