@@ -1,23 +1,35 @@
-<!-- 
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand" href="{{ url_for('/') }}">Tha Tech Streetss</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-          <i class="fa fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('/') }}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('') }}">Fashion Trends</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('') }}">Architecture</a>
-            </li>
-            {% if current_user.is_authenticated  %}
+<!--Landing page section-->
+<section class="header">
+  <nav class="navbar navbar-expand-lg navbar-transparent bg-transparent fs-14">
+    <a class="nav-logo" href="/"><strong>Tha Tech Streets</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">HOME <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('main.filter_posts',id=1) }}" id="navbarDropdownMenuLink">
+            ABOUT
+          </a>
+        </li>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('main.filter_posts',id=2) }}" id="navbarDropdownMenuLink">
+            FASHION
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('main.filter_posts',id=3) }}" id="navbarDropdownMenuLink">
+            ARCHITECTURE
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('main.filter_posts',id=4) }}">LIFESTYLE</a>
+        </li>
+        {% if current_user.is_authenticated  %}
             <li class="nav-item dropdown ">
               <a class="nav-link dropdown-toggle btn btn-outline-danger" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {{current_user.username}} </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -31,7 +43,19 @@
               <a class="btn color-primary" href="{{ url_for('auth.login')}}">sign in</a>
             </li>
           {% endif %}
-          </ul>
-        </div>
-      </div>
-    </nav> -->
+      </ul>
+    </div>
+  </nav>
+</section>
+
+    <!--mid-section landing page-->
+
+    <div class="text-box">
+      <h1><strong>THA TECH STREETS</strong></h1>
+      <P>There is a whole mountain of information out there about whats happening in the technology world, but, you want the <br>information tailored to bits and tweets right.
+        Tha Tech Streets blog is here to break it down for you <br> come along!.
+      </P>
+      <a href="{{ url_for('main.filter_posts',id=1) }}" class="hero-btn" id="landing-pg">Learn More</a>
+    </div> 
+  </section>
+    
