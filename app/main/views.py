@@ -119,6 +119,15 @@ def new_post():
     flash('New post created successfully.', category='success')
     return redirect(url_for('main.profile', username=current_user.username))
 
+
+#search blogpost
+@main.route('/search', methods=['GET', 'POST'])
+def search():
+    query = request.args.get('query')
+    posts = Post.get_posts_by_query(query)
+    return render_template('search.html', posts=posts, query=query)
+
+
 #delete blogpost
 main.route('/post/<int:id>/delete', methods=['GET', 'POST'])
 @login_required
@@ -137,4 +146,14 @@ def filter_posts(id):
     posts = Post.get_post_by_category(category.id)
     return render_template('posts.html', posts=posts, category=category)
 
+
+#delete comments
+@main.route('/comment/<int:id>/delete', methods=['GET', 'POST'])
+@login_required
+def delete_comment(id):
+    comment = Comment.get_comment(id)
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Comment deleted.', category='success')
+    return redirect(url_for('main.profile', username=current_user.username))
 
