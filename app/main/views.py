@@ -16,6 +16,7 @@ def index():
     latest_posts = Post.query.order_by(Post.created_at.desc()).limit(2)
     return render_template('index.html', posts=posts, categories=categories, quote=quote, latest_posts=latest_posts)
 
+
 #profile page
 @main.route('/profile/<username>', methods=['GET', 'POST'])
 def profile(username):
@@ -57,9 +58,8 @@ def profile(username):
             flash('Password updated.', category='success')
             return redirect(url_for('main.profile', username=user.username))
         else:
-            flash('Invalid password', category='danger')
-
-    title = 'My Account Profile'
+            flash('Invalid password', category='error')
+    title = 'Account Profile'
 
     #category form
     category_form = CategoryForm()
@@ -69,5 +69,30 @@ def profile(username):
         db.session.commit()
         flash('New category added successfully', category='success')
         return redirect(url_for('main.profile', username=user.username))
-
     return render_template("profile/profile.html",title=title,user=user,form=form,categories=categories,posts=posts,comments=comments,password_form=password_form,category_form=category_form)
+
+
+#blogpost
+@main.route('/post/<int:id>', methods=['GET', 'POST'])
+def single_post(id):
+    post = Post.get_post(id)
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(user_id=current_user.id,post_owner_id=post.user_id,content=form.content.data,post_id=post.id)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been posted!', category='success')
+        return redirect(url_for('.single_post', id=post.id))
+    # get comments
+    comments = Comment.get_comments_by_post(post.id)
+    return render_template('single_post.html', post=post,form=form,comments=comments)
+
+
+#get post by category
+@main.route('/category/<int:id>')
+def filter_posts(id):
+    category = Category.query.filter_by(id=id).first()
+    posts = Post.get_post_by_category(category.id)
+    return render_template('posts.html', posts=posts, category=category)
+
+
