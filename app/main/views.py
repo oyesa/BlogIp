@@ -5,6 +5,7 @@ from ..models import Role, User, Post,Category, Comment
 from ..request import get_quotes
 from flask_login import login_required, current_user
 from .forms import ProfileForm, CategoryForm, CommentForm,PasswordForm
+from flask_uploads import IMAGES, UploadSet, configure_uploads
 
 
 #index page
@@ -163,10 +164,11 @@ def delete_comment(id):
 @login_required
 def update_pic(username):
     user = User.query.filter_by(username=username).first()
-    if 'photo' in request.files:
-        image_url = upload(request.files['photo'])['url']
-        user.profile_pic_path = image_url
-        db.session.commit()
+    if request.method == 'POST' and 'photo' in request.files:
+        # photos.save(request.files['photo'])
+        # image_url = upload(request.files['photo'])['url']
+        # user.profile_pic_path = image_url
+        # db.session.commit()
         flash('Image upload successful', category='success')
         return redirect(url_for('main.profile', username=username))
     else:
@@ -180,8 +182,8 @@ def update_pic(username):
 def update_post_image(id):
     post = Post.query.filter_by(id=id).first()
     if 'photo' in request.files:
-        image_url = upload(request.files['photo'])['url']
-        post.image_path = image_url
-        db.session.commit()
+        # image_url = upload(request.files['photo'])['url']
+        # post.image_path = image_url
+        # db.session.commit()
         flash('Blogpost image uploaded', category='success')
         return redirect(url_for('main.profile', username=current_user.username))
