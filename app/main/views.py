@@ -88,6 +88,48 @@ def single_post(id):
     return render_template('single_post.html', post=post,form=form,comments=comments)
 
 
+#update blogpost
+@main.route('/post/<int:id>/update', methods=['GET', 'POST'])
+@login_required
+def update_post(id):
+    post = Post.get_post(id)
+    title = request.args.get('title')
+    category_id = request.args.get('category_id')
+    content = request.args.get('content')
+    user_id = request.args.get('user_id')
+    # update post
+    post.title = title
+    post.content = content
+    post.category_id = category_id
+    post.user_id = user_id
+    db.session.commit()
+    return redirect(url_for('main.profile', username=current_user.username))
+
+#create new blogpost
+@main.route('/post/new', methods=['GET', 'POST'])
+@login_required
+def new_post():
+    title = request.args.get('title')
+    user_id = request.args.get('user_id')
+    category_id = request.args.get('category_id')
+    content = request.args.get('content')
+    post = Post(title=title,user_id=user_id,category_id=category_id,content=content)
+    db.session.add(post)
+    db.session.commit()
+    flash('New post created successfully.', category='success')
+    return redirect(url_for('main.profile', username=current_user.username))
+
+#delete blogpost
+main.route('/post/<int:id>/delete', methods=['GET', 'POST'])
+@login_required
+def delete_post(id):
+    post = Post.get_post(id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Post deleted', category='success')
+    return redirect(url_for('main.profile', username=current_user.username))
+
+
 #get post by category
 @main.route('/category/<int:id>')
 def filter_posts(id):
