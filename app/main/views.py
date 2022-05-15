@@ -1,3 +1,73 @@
 from . import main
 from flask import render_template, redirect, url_for, abort, flash, request
+from .. import db
+from ..models import Role, User, Post,Category, Comment
+from ..request import get_quotes
+from flask_login import login_required, current_user
+from .forms import ProfileForm, CategoryForm, CommentForm,PasswordForm
 
+
+#index page
+@main.route('/')
+def index():
+    posts = Post.query.order_by(Post.created_at.desc()).all()
+    categories = Category.query.all()
+    quote = get_quotes()
+    latest_posts = Post.query.order_by(Post.created_at.desc()).limit(2)
+    return render_template('index.html', posts=posts, categories=categories, quote=quote, latest_posts=latest_posts)
+
+#profile page
+@main.route('/profile/<username>', methods=['GET', 'POST'])
+def profile(username):
+    # get user posts
+    user = User.query.filter_by(username=username).first()
+    posts = Post.get_user_posts(
+        user.id).order_by(Post.created_at.desc()).all()
+
+    # get comments created by other users
+    comments = Comment.get_my_posts_comments(user.id)
+    if user is None:
+        abort(404)
+
+    # get all categories
+    categories = Category.query.all()
+
+    # update profile form
+    form = ProfileForm()
+    if form.validate_on_submit():
+        user.bio = form.bio.data
+        user.name = form.name.data
+        user.email = form.email.data
+        user.username = form.username.data
+        db.session.commit()
+
+        flash('Profile updated.', category='success')
+        return redirect(url_for('main.profile', username=user.username))
+    form.name.data = user.name
+    form.email.data = user.email
+    form.username.data = user.username
+    form.bio.data = user.bio
+
+    #updatepassword
+    password_form = PasswordForm()
+    if password_form.validate_on_submit():
+        if current_user.verify_password(password_form.old_password.data):
+            current_user.password = password_form.password.data
+            db.session.commit()
+            flash('Password updated.', category='success')
+            return redirect(url_for('main.profile', username=user.username))
+        else:
+            flash('Invalid password', category='danger')
+
+    title = 'My Account Profile'
+
+    #category form
+    category_form = CategoryForm()
+    if category_form.validate_on_submit():
+        category = Category(name=category_form.name.data)
+        db.session.add(category)
+        db.session.commit()
+        flash('New category added successfully', category='success')
+        return redirect(url_for('main.profile', username=user.username))
+
+    return render_template("profile/profile.html",title=title,user=user,form=form,categories=categories,posts=posts,comments=comments,password_form=password_form,category_form=category_form)
