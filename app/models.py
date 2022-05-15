@@ -116,7 +116,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
-    title = db.Column(db.String(255))
+    title = db.Column(db.String(50))
     content = db.Column(db.String())
     image_path = db.Column(db.String())
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -167,7 +167,7 @@ class Post(db.Model):
 class Category(db.Model):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255))
+    name = db.Column(db.String(50))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     posts = db.relationship('Post', backref='category', lazy='dynamic')
 
