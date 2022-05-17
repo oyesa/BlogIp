@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf%}
+
+{% block content %}
+
+{% if post.image_path %}
+<!-- <section class="single-top-header" style="background-image: url({{ post.image_path }})"> -->
+    {% else %}
+    <!-- <section class="single-top-header" style="background-image: url_for('static',filename='img/9.jpg')"> -->
+        {% endif %}
+
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 text-center">
+                        <div class="single-content">
+                            <p>{{ post.category.name }}</p>
+                            <h2 class="display-6 mt-4 headings">
+                                {{ post.title }}
+                            </h2>
+                            <div class="author mt-5">
+                                <p>
+                                    By {{ post.user.name }}
+                                </p>
+                                <!-- check if author profile exists -->
+                                {% if post.user.profile_pic_path %}
+                                <img src="{{ post.user.profile_pic_path }}" alt="author" class="author-img mt-3">
+                                {% else %}
+                                <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vectorstock.com%2Froyalty-free-vector%2Ffemale-avatar-profile-icon-round-african-american-vector-18307263&psig=AOvVaw3stGjlcMf35crw3KBQ4otk&ust=1652852354699000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCJCrrYHp5fcCFQAAAAAdAAAAABAN" alt="author"
+                                    class="author-img mt-3">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog-container p-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        {{ post.content|safe }}
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="comments-container mb-2">
+        <div class="container">
+            <div class="comments">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Flash message -->
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"
+                                aria-label="{{ category }}:">
+                                <use xlink:href="#exclamation-triangle-fill" />
+                            </svg>
+                            <div>
+                                s
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="col-md-8">
+                        {% if comments %}
+                        {% for comment in comments %}
+                        <div class="col-md-12">
+                            <div class="d-flex justify-content-start">
+                                <div>
+                                    <!-- check if author profile exists -->
+                                    {% if comment.user.profile_pic_path %}
+                                    <img src="{{ comment.user.profile_pic_path }}" alt="author" class="comment-author-img">
+                                    {% else %}
+                                    <img src="https://image.pngaaa.com/303/1721303-middle.png" alt="author"
+                                        class="comment-author-img">
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <h5 class="comment-author">
+                                        {{ comment.user.name }} <span><small>{{ comment.created_at.strftime('%d %b %Y')
+                                                }}</small></span>
+                                    </h5>
+                                    <p class="comment-p">
+                                        {{ comment.content|safe }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <h1>No comments for this post</h1>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        <div class="comment-form">
+                            <!-- check is user is logged in -->
+                            {% if current_user.is_authenticated %}
+                            {{wtf.quick_form(form)}}
+                            {% else %}
+                            <a class="btn btn-block text-center text-capitalize" href="{{ url_for('auth.login')}}">Sign
+                                in to leave a comment</a>
+                            {%endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endblock %}
+
+{% endblock %}
