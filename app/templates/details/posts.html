@@ -1,0 +1,55 @@
+<table class="table table-responsive table-hover posts">
+  <thead>
+      <tr>
+          <th scope="col">#</th>
+          <th scope="col">
+              Image
+          </th>
+          <th scope="col">Category</th>
+          <th scope="col">Title</th>
+          <th scope="col">Comments</th>
+          <th scope="col">Date</th>
+          <th scope="col"></th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for post in posts %}
+      <tr>
+          <td>{{ loop.index }}</td>
+          <td>
+              {% if post.image_path %}
+              <img src="{{post.image_path}}" alt="{{ post.title }}" class="img-fluid">
+              {% else %}
+              <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Ffindicons.com%2Fsearch%2Fno-image-available&psig=AOvVaw0bvarwI8bKF1AkHGW-uXoI&ust=1652864013107000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCOj-orWU5vcCFQAAAAAdAAAAABAD"
+                  alt="no-img image" class="img-fluid">
+              {% endif %}
+              <br>
+              <a style="margin-left: 13px;" type="button" data-bs-toggle="modal"
+                  data-bs-target="#editPostImageModal{{post.id}}">
+                  <i class="fas fa-edit m-1"></i>
+              </a>
+              {% include 'modals/blogpost_photo.html' %}
+          </td>
+          <td><span class="badge bg-warning">{{ post.category.name }}</span></td>
+          <td>{{ post.title }}</td>
+          <td>
+              <span class="badge rounded-pill bg-primary">
+                  {{ post.comments.count() }}
+              </span>
+          </td>
+          <td>{{ post.created_at.strftime('%d %b %Y') }}</td>
+          <td>
+              <a href="{{ url_for('main.single_post',id=post.id)}}" class="text-danger p-1" title="View Post">
+                  <i class="fas fa-eye"></i>
+              </a>
+              <a type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#editPostModal{{post.id}}">
+                  <i class="fas fa-edit"></i>
+              </a>
+              {% include 'modals/edit_post.html' %}
+              <a href="{{ url_for('main.delete_post',id=post.id)}}" class="text-danger" title="Delete Post"><small><i
+                          class="fa fa-trash"></i></small></a>
+          </td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
