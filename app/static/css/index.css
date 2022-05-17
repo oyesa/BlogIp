@@ -1,0 +1,183 @@
+/* font-family: 'Fredoka One', cursive; */
+
+*{
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Fredoka One', cursive;
+}
+
+
+/* navbar */
+/* .header{
+  min-height: 100vh;
+  width: 100%;
+  background-position: center;
+  background-image: url("../img/bck1.jpg");
+  background-size: cover;
+  position: relative;
+}
+
+.headings {
+  font-family: "Merienda", cursive;
+}
+
+.nav-logo {
+  border: 3px solid white;
+  border-radius: 5%;
+  color: white;
+  text-decoration-line: none; 
+  font-size: 20px;
+}
+
+.nav-link{
+  font-size: 17px;
+  color: white !important;
+  justify-content: space-between;
+}
+
+.nav-link:hover{
+  background: #f44336;
+  border-radius: 3px;
+}
+
+.nav-links ul li a {
+  font-size: 13px;
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+} */
+
+/* navbar */
+.navbar-brand {
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+.nav-link:hover{
+  color: var(--main-color);
+}
+.navbar-brand:hover {
+  color: rgb(255, 255, 255);
+}
+.navbar-expand-lg {
+  background: #80f;
+}
+
+.navbar-expand-lg li a {
+  color: white;
+}
+
+.navbar-toggler {
+  background-color: white;
+}
+.nav-right {
+  margin-right: 50px;
+  text-transform: capitalize;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.nav-link {
+  margin-right: 5px;
+}
+
+.body{
+  .text-underline {
+    text-decoration: underline;
+  }
+  
+  .btn-default {
+    margin-top: 10px;
+  }
+  
+  a,
+  a:hover,
+  a:focus {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .fa {
+    color: #c5015f;
+    font-size: 15px;
+  }
+  
+  .fade-item {
+    font-weight: 400;
+    color: rgb(63, 63, 63);
+    text-transform: uppercase;
+  }
+  
+  .btn,
+  .btn:hover {
+    background-color: var(--main-color);
+    color: #fff;
+  }
+  
+  .btn-outline-dark,
+  .btn-outline-dark:hover {
+    background-color: transparent;
+    color: black;
+  }
+  
+  .b-r {
+    text-transform: uppercase;
+    border-radius: 20px;
+    padding: 7px;
+  }
+  .bg-lightdark {
+    background-color: #dbdbdb;
+  }
+  
+}
+
+/* homepage */
+.homepage {
+  background-image: url("../img/bck2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.homepage-content {
+  margin: 170px 0px 170px 0px;
+}
+
+.homepage-content h3 {
+  letter-spacing: 1px;
+  font-size: 1.8rem;
+  font-family: "Poppins", sans-serif;
+}
+.home {
+  background-color: rgba(39, 39, 39, 0.3);
+  color: white;
+}
+
+.card {
+  background: #fff none repeat scroll 0 0;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 11px 5px rgb(103 58 183 / 10%);
+  margin-bottom: 1px;
+  padding: 1px 1px;
+  transition: all 300ms ease-in-out;
+  -webkit-transition: all 300ms ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 0 11px 5px rgba(70, 41, 121, 0.25);
+  background: linear-gradient(-19deg, rgba(235, 174, 8, 0.95) 0px);
+}
+
+.card h5 {
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.post-card img {
+  border-radius: 5px 5px 0 0;
+  height: 200px;
+  width: 100%;
+}

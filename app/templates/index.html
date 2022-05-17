@@ -3,7 +3,7 @@
 
 {% block content %}
 <!-- homepage-content -->
-<section class="homepage">
+<section id="landingpage">
   <div class="home">
       <div class="container">
           <div class="row">
@@ -27,22 +27,16 @@
         <div class="col-md-12">
             <div class="row">
                 {{ macro.displayPosts(posts) }}
+                <h6>Search</h6>
+                <form action="{{ url_for('main.search')}}" class="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search Blogpost Title" name="query">
+                        <div class="input-group-append">
+                            <button class="btn" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </div>
-        <div class="col-md-2">
-          <div class="row">
-              <div class="card p-3 col-md-12">
-                  <h5>Search</h5>
-                  <form action="{{ url_for('main.search')}}" class="search">
-                      <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search post title.." name="query">
-                          <div class="input-group-append">
-                              <button class="btn" type="submit"><i class="fa fa-search text-white"></i></button>
-                          </div>
-                      </div>
-                  </form>
-              </div>
-          </div>
         </div>
         <div class="row mt-3">
           <div class="card p-2">
@@ -57,7 +51,7 @@
       </div>
       <div class="card p-2 row mt-3 tops">
 
-        <h5>MAKING HEADLINES</h5>
+        <h5>Making Headlines</h5>
         
         {% for post in latest_posts %}
         <a href="{{ url_for('main.single_post',id=post.id)}}">

@@ -17,8 +17,8 @@ def register():
         elif User.query.filter_by(username=form.username.data).first():
             flash('Username already exists', category='error')
             return redirect(url_for('auth.register'))
-        elif len(form.password.data) < 8:
-            flash('Password must be at least 7 characters', category='error')
+        elif len(form.password.data) > 3:
+            flash('Password must be at least 3 characters', category='error')
             return redirect(url_for('auth.register'))
 
         else:
