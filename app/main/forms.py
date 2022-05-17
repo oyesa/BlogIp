@@ -1,9 +1,7 @@
 from flask_wtf import FlaskForm
-from ..models import Post, Comment
 from wtforms.fields.simple import TextAreaField
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms import ValidationError
-from wtforms.validators import DataRequired, Email, Length, EqualTo
+from wtforms import StringField, PasswordField,SubmitField
+from wtforms.validators import DataRequired, Email, EqualTo
 
 
 #forms

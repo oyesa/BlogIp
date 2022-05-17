@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% import 'boostrap/wtf.html' as wtf %}
+
+{% block content %}
+
+<section class="profile">
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-12">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="">
+          <p>{{ message }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+      </div>
+      <div class="col-md-4">
+        <div class="profile-pic">
+          {%  if user.profile_pic_path  %}
+          <img class="pp-img" src="{{user.profile_pic_path}}" alt="">
+          {% else %}
+          <img class="pp-img" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vectorstock.com%2Froyalty-free-vector%2Favatar-black-woman-icon-cartoon-style-vector-8875639&psig=AOvVaw3stGjlcMf35crw3KBQ4otk&ust=1652852354699000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCJCrrYHp5fcCFQAAAAAdAAAAABAD" alt="female avatar">
+          {%endif%}
+          <div class="card-body text-center">
+            <h5 class="card-text">
+              {% if current_user.name==None %}
+              <span>No Username</span>
+              {% else %}
+              {{ current_user.name }}
+              {% endif %}
+            </h5>
+            <p>{{ current_user.name }}</p>
+            <p>{% if current_user.bio %}</p>
+            <span>{{ current_user.bio }}</span>
+            {% else %}
+            <span>No User-Bio</span>
+            {% endif %}
+            <small><span class="badge rounded-pill bg-secondary text-white">{{ current_user.created_at.strftime('%d %b %Y') }}</span></small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+{% endblock %}
