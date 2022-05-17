@@ -24,7 +24,7 @@
                             {% if post.image_path %}
                             <img src="{{ post.image_path }}" class="card-img-top" alt="{{ post.category.name }}">
                             {% else %}
-                            <img class="card-img-top" src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" alt="{{ post.title }}">
+                            <img class="card-img-top" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Ffindicons.com%2Fsearch%2Fno-image-available&psig=AOvVaw0G2YL4aTiE_FUMnvt5Z1yu&ust=1652890788245000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCMiZsJT45vcCFQAAAAAdAAAAABAD" alt="{{ post.title }}" alt="{{ post.title }}">
                             {% endif %}
                             <div class="card-body text-center">
                                 <a href="{{ url_for('main.single_post',id=post.id)}}">
