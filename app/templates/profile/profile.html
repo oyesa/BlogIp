@@ -7,7 +7,6 @@
   <div class="container mt-4">
     <div class="row">
       <div class="col-md-12">
-
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}
@@ -17,7 +16,6 @@
         {% endfor %}
         {% endif %}
         {% endwith %}
-
       </div>
       <div class="col-md-4">
         <div class="profile-pic">
@@ -40,14 +38,79 @@
             {% else %}
             <span>No User-Bio</span>
             {% endif %}
-            <small><span class="badge rounded-pill bg-secondary text-white">{{ current_user.created_at.strftime('%d %b %Y') }}</span></small>
+            <small><span class="badge rounded-pill bg-primary text-white">{{ current_user.created_at.strftime('%d %b %Y') }}</span></small>
+          </div>
+        </div>
+        <div class="row mb-2 mt-2">
+          <div class="col md 12">
+            <div class="card">
+              {% if user == current_user  %}
+              <form action="{{url_for('main.update_pic',username=user.username)}}" method="post"
+              enctype="multipart/form-data">
+              <div class="row">
+                <div class="col-md-12">
+                  <input name="photo" class="form-control" required type="file">
+                </div>
+                <div class="col-md-12">
+                  <input type="file" class="btn btn-lg btn-sm" value="update profile picture">
+                </div>
+              </div>
+            </form>
+            {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="form-update-profile">
+                <div class="row">
+                  {{wtf.quick_form(form)}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 mb-3 mt-3">
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex justify-content-between">
+              <!-- blogposts for current user -->
+              <div>
+                <h5>My Blog Posts</h5>
+              </div>
+              <div>
+                <button type="button" class="btn btn-sm" data-bs-toggle="modal"
+                data-bs-target="#exampleModal"><i class="fa fa-plus">Add a BlogPost</i></button>
+                {% include 'modals/add_post.html' %}
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            {% include 'includes/posts.html' %}
+          </div>
+        </div>
+      </div>
+      <!-- comments for the blogpost -->
+      <div class="col-md-12 mb-3 mt-3">
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h5 class="card-title">Comments</h5>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            {% include 'includes/comments.html' %}
           </div>
         </div>
       </div>
     </div>
-
   </div>
-
 </section>
 
 {% endblock %}
