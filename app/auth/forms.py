@@ -13,13 +13,13 @@ class RegistrationForm(FlaskForm):
     password2 = PasswordField('Confirm password', validators=[DataRequired()])
     submit = SubmitField('Create Account')
 
-    def validate_check_email(self, field):
+    def check_email_exist(self, field):
         if User.query.filter_by(email=field.data).first():
-            raise ValidationError('Email registered. Proceed to login.')
+            raise ValidationError('Email already registered. Please Login')
 
-    def validate_check_username(self, field):
+    def check_username_exist(self, field):
         if User.query.filter_by(username=field.data).first():
-            raise ValidationError('Username already in use.')
+            raise ValidationError('Username already exists.')
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])

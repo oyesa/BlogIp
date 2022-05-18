@@ -1,3 +1,4 @@
+from operator import index
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -11,24 +12,24 @@ from datetime import datetime
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True)
+    name = db.Column(db.String(255), unique=True)
     users = db.relationship('User', backref='role', lazy='dynamic')
 
     def __repr__(self):
-        return f'User {self.name}'
+        return '<Role %r>' % self.name
 
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), index=True)
-    name = db.Column(db.String(50))
-    email = db.Column(db.String(50), unique=True, index=True)
-    password_hash = db.Column(db.String(50))
+    username = db.Column(db.String(255), index=True)
+    name = db.Column(db.String(255), index=True)
+    email = db.Column(db.String(255), index=True)
+    password_hash = db.Column(db.String(20))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
-    pass_secure = db.Column(db.String(50))
+    pass_secure = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     posts = db.relationship('Post', backref='user', lazy='dynamic')
     comments = db.relationship('Comment', backref='user', lazy='dynamic')
@@ -48,10 +49,6 @@ class User(UserMixin, db.Model):
         db.session.add(self)
         db.session.commit()
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(int(user_id))
-
     # search email in db
     @classmethod
     def search_email(cls, email):
@@ -65,6 +62,10 @@ class User(UserMixin, db.Model):
         user = User.query.filter_by(username=username).first()
         if user:
             return user
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
     def __repr__(self):
         return f'User {self.username}'
@@ -116,7 +117,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
-    title = db.Column(db.String(50))
+    title = db.Column(db.String(255))
     content = db.Column(db.String())
     image_path = db.Column(db.String())
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -167,7 +168,7 @@ class Post(db.Model):
 class Category(db.Model):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     posts = db.relationship('Post', backref='category', lazy='dynamic')
 

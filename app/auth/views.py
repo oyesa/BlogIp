@@ -1,7 +1,7 @@
-from . import auth
-from .. import db
 from ..models import User
 from flask import render_template, redirect, url_for, flash, request
+from . import auth
+from .. import db
 from .forms import RegistrationForm, LoginForm
 from flask_login import login_user, logout_user, login_required
 
@@ -17,7 +17,7 @@ def register():
         elif User.query.filter_by(username=form.username.data).first():
             flash('Username already exists', category='error')
             return redirect(url_for('auth.register'))
-        elif len(form.password.data) > 3:
+        elif len(form.password.data) < 3:
             flash('Password must be at least 3 characters', category='error')
             return redirect(url_for('auth.register'))
 

@@ -3,7 +3,7 @@
 
 {% block content %}
 <!-- homepage-content -->
-<section id="landingpage">
+<section class="homepage">
   <div class="home">
       <div class="container">
           <div class="row">
@@ -14,7 +14,14 @@
                       <p class="author mt-3">~ {{ quote.author }} ~</p>
                   </div>
               </div>
-              <div class="col-md-2"></div>
+              <form action="{{ url_for('main.search')}}" class="search mb-3">
+                  <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Search Blogpost Title" name="query">
+                      <div class="input-group-append">
+                          <button class="btn" type="submit"><i class="fa fa-search"></i></button>
+                      </div>
+                  </div>
+              </form>
           </div>
       </div>
   </div>
@@ -27,21 +34,12 @@
         <div class="col-md-12">
             <div class="row">
                 {{ macro.displayPosts(posts) }}
-                <h6>Search</h6>
-                <form action="{{ url_for('main.search')}}" class="search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search Blogpost Title" name="query">
-                        <div class="input-group-append">
-                            <button class="btn" type="submit"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
         <div class="row mt-3">
           <div class="card p-2">
               <div class="col-md-12 categories">
-                  <h5>Blog Categories</h5>
+                  <h5 class="text-center">Blog Categories</h5>
                   {% for category in categories %}
                   <a class="btn btn-sm btn-outline-dark"
                       href="{{ url_for('main.filter_posts',id=category.id) }}">{{ category.name }}</a>
@@ -51,7 +49,7 @@
       </div>
       <div class="card p-2 row mt-3 tops">
 
-        <h5>Making Headlines</h5>
+        <h5 class="text-center">Making Headlines</h5>
         
         {% for post in latest_posts %}
         <a href="{{ url_for('main.single_post',id=post.id)}}">

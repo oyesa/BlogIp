@@ -9,12 +9,11 @@ from flask_migrate import Migrate, MigrateCommand
 app = create_app('development')
 
 manager = Manager(app, db)
-migrate = Migrate(app,db)
-
-
 manager.add_command('server',Server)
-manager.add_command("db", MigrateCommand)   
 
+
+manager.add_command("db", MigrateCommand) 
+migrate = Migrate(app,db)  
 
 
 @manager.shell
@@ -30,9 +29,6 @@ def test():
     import unittest
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
-
-
- 
 
 if __name__ == '__main__':
     manager.run()

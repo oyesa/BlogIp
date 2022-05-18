@@ -2,4 +2,5 @@ virtual/
 .vscode
 *.pyc
 start.sh
+notes.txt
 instance/
