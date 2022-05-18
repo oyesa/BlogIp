@@ -45,7 +45,7 @@
               <a type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#editPostModal{{post.id}}">
                   <i class="fas fa-edit"></i>
               </a>
-              {% include 'modals/edit_post.html' %}
+              {% include 'modals/update_post.html' %}
               <a href="{{ url_for('main.delete_post',id=post.id)}}" class="text-danger" title="Delete Post"><small><i
                           class="fa fa-trash"></i></small></a>
           </td>
