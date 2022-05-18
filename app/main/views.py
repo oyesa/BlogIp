@@ -98,7 +98,6 @@ def update_post(id):
     category_id = request.args.get('category_id')
     content = request.args.get('content')
     user_id = request.args.get('user_id')
-    # update post
     post.title = title
     post.content = content
     post.category_id = category_id

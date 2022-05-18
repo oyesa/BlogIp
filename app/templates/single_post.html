@@ -4,7 +4,7 @@
 {% block content %}
 
 {% if post.image_path %}
-<!-- <section class="single-top-header" style="background-image: url({{ post.image_path }})"> -->
+<!-- <section class="single-top-header" style="background-image: {{ url_for('auth.login')}};"> -->
     {% else %}
     <!-- <section class="single-top-header" style="background-image: url_for('static',filename='img/9.jpg')"> -->
         {% endif %}
@@ -27,7 +27,7 @@
                                 {% if post.user.profile_pic_path %}
                                 <img src="{{ post.user.profile_pic_path }}" alt="author" class="author-img mt-3">
                                 {% else %}
-                                <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vectorstock.com%2Froyalty-free-vector%2Ffemale-avatar-profile-icon-round-african-american-vector-18307263&psig=AOvVaw3stGjlcMf35crw3KBQ4otk&ust=1652852354699000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCJCrrYHp5fcCFQAAAAAdAAAAABAN" alt="author"
+                                <img src="https://www.iconfinder.com/icons/2758886/woman_avatar_black_woman_female_lady_user_icon" alt="author"
                                     class="author-img mt-3">
                                 {% endif %}
                             </div>
@@ -84,7 +84,7 @@
                                     {% if comment.user.profile_pic_path %}
                                     <img src="{{ comment.user.profile_pic_path }}" alt="author" class="comment-author-img">
                                     {% else %}
-                                    <img src="https://image.pngaaa.com/303/1721303-middle.png" alt="author"
+                                    <img src="https://www.iconfinder.com/icons/2758886/woman_avatar_black_woman_female_lady_user_icon" alt="author"
                                         class="comment-author-img">
                                     {% endif %}
                                 </div>
@@ -120,6 +120,5 @@
             </div>
         </div>
     </section>
-    {% endblock %}
 
 {% endblock %}

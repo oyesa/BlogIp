@@ -46,7 +46,7 @@
                   <i class="fas fa-edit"></i>
               </a>
               {% include 'modals/update_post.html' %}
-              <a href="{{ url_for('main.delete_post',id=post.id)}}" class="text-danger" title="Delete Post"><small><i
+              <a href="{{ url_for('main.update_post',id=post.id)}}" class="text-danger" title="Delete Post"><small><i
                           class="fa fa-trash"></i></small></a>
           </td>
       </tr>
