@@ -24,7 +24,7 @@ def create_app(config_name):
 
     #create app configurations
     app.config.from_object(config_options[config_name])
-    config_options[config_name].init_app(app)
+    # config_options[config_name].init_app(app)
 
     #initialize the extensions
     bootstrap.init_app(app)
@@ -38,7 +38,7 @@ def create_app(config_name):
     app.register_blueprint(main_blueprint)
 
     from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint)
+    app.register_blueprint(auth_blueprint,url_prefix = '/authenticate')
 
     # configure UploadSet
     configure_uploads(app, photos)

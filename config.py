@@ -15,12 +15,14 @@ class Config:
        
 
 class ProdConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL").replace("postgres://", "postgresql://", 1)
     pass
   
     
 
 class TestConfig(Config):
-   pass
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://oyesa:crowne@localhost/blogip_test'
+    pass
 
 
 class DevConfig(Config):
